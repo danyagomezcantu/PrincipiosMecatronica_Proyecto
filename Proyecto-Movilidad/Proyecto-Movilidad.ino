@@ -1,7 +1,7 @@
 // Conexión Bluetooth a nuestra PC
 #include "BluetoothSerial.h"
 
-// Pantalla LCD
+// Librerías para conectar LCD
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
