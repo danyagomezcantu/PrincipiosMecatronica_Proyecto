@@ -32,10 +32,6 @@ void setup() {
   pinMode(InB2, OUTPUT);
   pinMode(ENA1, OUTPUT);
   pinMode(ENA2, OUTPUT);
-  pinMode(EncA1, INPUT);
-  pinMode(EncB1, INPUT);
-  pinMode(EncA2, INPUT); 
-  pinMode(EncB2, INPUT);
 
   // Inicialización de la conexión Bluetooth y de la pantalla LCD
   SerialBT.begin("Robot_Danya_Luis");
