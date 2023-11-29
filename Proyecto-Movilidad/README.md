@@ -1,6 +1,6 @@
 # Proyecto-Movilidad
 
-Este proyecto consiste en probar la movilidad de un robot a través de Bluetooth. El código se encarga de establecer una conexión Bluetooth con una PC y recibir comandos de dirección. Estos comandos se utilizan para controlar los motores del robot y moverlo en diferentes direcciones.
+Esta parte del proyecto consistió en probar la movilidad del robot a través de Bluetooth. El código se encarga de establecer una conexión Bluetooth con una PC y recibir comandos de dirección. Estos comandos se utilizan para controlar los motores del robot y moverlo en diferentes direcciones.
 
 ### Requisitos
 * Placa ESP32 compatible
