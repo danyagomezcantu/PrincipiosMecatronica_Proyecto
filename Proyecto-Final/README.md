@@ -1,4 +1,4 @@
-### Proyecto-Final
+# Proyecto-Final
 
 Este proyecto consiste en un robot (controlado por la ESP32 Dev Kit V1) que utiliza diferentes sensores para moverse de manera automatizada. El código fuente se encuentra en el archivo Proyecto-Final.ino.
 
