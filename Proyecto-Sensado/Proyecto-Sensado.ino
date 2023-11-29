@@ -87,13 +87,12 @@ void loop() {
   Serial.println();
 }
 
-// Funciones
+// Funciones de sensado
 void monitorSerialPulsos() {
   Serial.print("Pulsos_Enc_Izq:" + String(pulsesIzq) + " | Pulsos_Enc_Der:" + String(pulsesDer) + " | ");  
 }
 
 void Fotoresistor() {
-  
   // Lectura de los fotoresistores
   luzDetectadaIzq = analogRead(fotoresistorIzq);
   luzDetectadaDer = analogRead(fotoresistorDer);
@@ -154,6 +153,7 @@ void Obstaculos() {
   lcd.print(String(obstaculo[0]) + " " + String(obstaculo[1]) + " " + String(obstaculo[2]) + " " + String(obstaculo[3]));
 }
 
+// Funciones de los pulsos de los encoders
 void Encoder_izquierdo() {
   if(digitalRead(EncB1) == HIGH) {
     pulsesIzq++;
