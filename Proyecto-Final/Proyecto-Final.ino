@@ -229,3 +229,20 @@ void Obstaculos(){
   lcd.setCursor(0,0);
   lcd.print(String(obstaculo[0])+" "+String(obstaculo[1])+" "+String(obstaculo[2])+" "+String(obstaculo[3]));
 }
+
+// Funciones de los pulsos de los encoders
+void Encoder_izquierdo() {
+  if(digitalRead(EncB1) == HIGH) {
+    pulsesIzq++;
+  } else {
+    pulsesIzq--;
+  }  
+}
+
+void Encoder_derecho() {
+  if(digitalRead(EncB2) == HIGH) {
+    pulsesDer++;
+  } else {
+    pulsesDer--;
+  }
+}
