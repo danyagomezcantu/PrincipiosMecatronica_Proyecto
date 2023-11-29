@@ -1,4 +1,8 @@
-# Proyecto Final
+# Proyecto Final de Principios de Mecatrónica, Otoño 2023
+
+* Danya Carolina Gómez Cantú 198618
+* Luis Alfonso Hernández Vázquez 179807
+
 Este proyecto consiste en un robot (controlado por la ESP32 Dev Kit V1) que utiliza diferentes sensores para realizar tareas específicas. El código fuente se encuentra en el archivo Proyecto-Final.ino.
 
 ### Descripción del proyecto
