@@ -43,10 +43,10 @@ bool infra1, infra2, infra3, infra4;
 volatile long pulsesDer = 0;
 volatile long pulsesIzq = 0;
 
+// Configuración de pines
 void setup() {
   Serial.begin(115200);
-
-  // Configuración de pines
+    
   pinMode(fotoresistorIzq, INPUT); // Configuración de los fotoresistores como entrada
   pinMode(fotoresistorDer, INPUT); 
   
