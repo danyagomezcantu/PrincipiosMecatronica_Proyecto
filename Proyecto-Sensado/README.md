@@ -8,7 +8,13 @@ Este proyecto tiene como objetivo probar los sensores del robot. Se utilizan dif
 * Sensores infrarrojos: Se utilizan sensores infrarrojos para detectar obstáculos.
 * Fotoresistores: Se utilizan fotoresistores para medir la intensidad de luz.
 
-En el código puede consultarse la configuración de los pines.
+### Configuración del hardware
+* LCD: se conecta a través de la interfaz I2C.
+* Sensor ultrasónico: se conecta a los pines echoPin y trigPin.
+* Sensores infrarrojos: se conectan a los pines infrarrojo1, infrarrojo2, infrarrojo3 y infrarrojo4.
+* Fotoresistores: se conectan a los pines fotoresistorIzq y fotoresistorDer.
+* Motorreductores: se conectan a los pines ENA1, InA1, InB1, ENA2, InA2 e InB2.
+* Encoders: se conectan a los pines EncA1, EncA2, EncB1 y EncB2.
 
 ### Funciones principales
 
