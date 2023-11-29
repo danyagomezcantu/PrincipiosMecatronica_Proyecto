@@ -33,5 +33,4 @@ El código fuente proporciona las funciones necesarias para controlar el movimie
 Para compilar y cargar el código en la IDE de Arduino, se requiere la instalación de las siguientes bibliotecas:
 * Wire.h: biblioteca para la comunicación I2C.
 * LiquidCrystal_I2C.h: biblioteca para controlar el LCD.
-
 Una vez cargado el código en la ESP32, el robot está listo para funcionar.
