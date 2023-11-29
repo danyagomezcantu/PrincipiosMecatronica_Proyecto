@@ -2,28 +2,31 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-// Objeto LiquidCrystal_I2C, "lcd", con la dirección I2C predeterminada 0x27, 16 columnas y 2 filas
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Objeto LiquidCrystal_I2C, "lcd", con la default screen address I2C 0x27, 16 columnas y 2 filas
 
 // Definición de pines y variables
-#define fotoresistorIzq 34 // Fotoresistores
-#define fotoresistorDer 35 
-
-#define echoPin 12 // Sensor ultrasónico
+// Sensor ultrasónico
+#define echoPin 12 
 #define trigPin 13
 
-#define infrarrojo1 19 // Sensores infrarrojos de izquierda a derecha
+// Sensores infrarrojos de izquierda a derecha
+#define infrarrojo1 19
 #define infrarrojo2 18
 #define infrarrojo3 5
 #define infrarrojo4 17
 
-#define ENA1 14 // Motores (A1, A2, B1, B2) y velocidad (ENA1, ENA2)
+// Fotoresistores
+#define fotoresistorIzq 34
+#define fotoresistorDer 35 
+
+// Motorreductores
+#define ENA1 14
 #define InB2 27
 #define InA2 26
 #define InB1 25
 #define InA1 33
 #define ENA2 32
-#define EncA1 4 // Pines del encoder
+#define EncA1 4
 #define EncA2 15
 #define EncB1 2
 #define EncB2 16
@@ -31,9 +34,12 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 // Variables
 int luzDetectadaIzq;
 int luzDetectadaDer;
+
 int duracionUltrasonico;
 int distanciaUltrasonico;
+
 bool infra1, infra2, infra3, infra4;
+
 volatile long pulsesDer = 0;
 volatile long pulsesIzq = 0;
 
@@ -52,25 +58,28 @@ void setup() {
   pinMode(infrarrojo3, INPUT);
   pinMode(infrarrojo4, INPUT);
   
-  pinMode(ENA1, OUTPUT); // Configuración de los motorreductores
-  pinMode(InA1, OUTPUT);
-  pinMode(InB1, OUTPUT);
-  pinMode(ENA2, OUTPUT);
-  pinMode(InA2, OUTPUT);
-  pinMode(InB2, OUTPUT);
-  pinMode(EncA1, INPUT); // Configuración del encoder
-  pinMode(EncB1, INPUT);
-  pinMode(EncA2, INPUT); 
-  pinMode(EncB2, INPUT);
+  pinMode(ENA1, OUTPUT); // Configuración de los motores
+  pinMode(InA1, OUTPUT);  
+  pinMode(InB1, OUTPUT); 
+  pinMode(ENA2, OUTPUT); 
+  pinMode(InA2, OUTPUT); 
+  pinMode(InB2, OUTPUT); 
+  pinMode(EncA1, INPUT); 
+  pinMode(EncB1, INPUT); 
+  pinMode(EncA2, INPUT);  
+  pinMode(EncB2, INPUT); 
   
-  lcd.init();   // Inicializa el LCD
+  lcd.init();   // Inicializa el LCD 
   lcd.backlight();   // Enciende la retroiluminación del LCD
 }
 
 void loop() {
+
+  // Lectura de los encoders
   attachInterrupt(digitalPinToInterrupt(EncA1), Encoder_izquierdo, RISING);
   attachInterrupt(digitalPinToInterrupt(EncA2), Encoder_derecho, RISING);
 
+  // Lectura de los sensores
   monitorSerialPulsos();
   Fotoresistor();
   Ultrasonico();
@@ -78,33 +87,43 @@ void loop() {
   Serial.println();
 }
 
+// Funciones
 void monitorSerialPulsos() {
   Serial.print("Pulsos_Enc_Izq:" + String(pulsesIzq) + " | Pulsos_Enc_Der:" + String(pulsesDer) + " | ");  
 }
 
 void Fotoresistor() {
+  
+  // Lectura de los fotoresistores
   luzDetectadaIzq = analogRead(fotoresistorIzq);
   luzDetectadaDer = analogRead(fotoresistorDer);
+
+  // Impresión de los valores en el LCD
   lcd.setCursor(0,1);
   lcd.print("I:" + String(luzDetectadaIzq) + " | D:" + String(luzDetectadaDer));
   delay(1000);
 
+  // Impresión de los valores en el monitor serial
   Serial.print("LDR_Izq:" + String(luzDetectadaIzq) + " | LDR_Der:" + String(luzDetectadaDer) + " |");
-
   delay(250);
 }
 
 void Ultrasonico() {
+
+  // Lectura del sensor ultrasónico
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2); 
 
+  // Envío de pulso
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
+  // Lectura de la duración del pulso, cálculo de distancia
   duracionUltrasonico = pulseIn(echoPin, HIGH);
   distanciaUltrasonico = 0.0343 * duracionUltrasonico * 0.5;
 
+  // Envío de datos al LCD
   lcd.setCursor(11,0); 
   lcd.print("L:" + String(distanciaUltrasonico));
   Serial.print(" Distancia:" + String(distanciaUltrasonico) + " | ");
@@ -117,6 +136,7 @@ void Obstaculos() {
   infra3 = digitalRead(infrarrojo3);
   infra4 = digitalRead(infrarrojo4);
 
+  // Impresión de los valores en el LCD
   bool infra[] = {infra1, infra2, infra3, infra4};
   int obstaculo[] = {0, 0, 0, 0};
 
@@ -126,7 +146,10 @@ void Obstaculos() {
     }
   }
   
+  // Impresión de los valores en el monitor serial
   Serial.print("Obst:" + String(obstaculo[0]) + " " + String(obstaculo[1]) + " " + String(obstaculo[2]) + " " + String(obstaculo[3]) + " | ");
+  
+  // Impresión de los valores en el LCD
   lcd.setCursor(0,0);  
   lcd.print(String(obstaculo[0]) + " " + String(obstaculo[1]) + " " + String(obstaculo[2]) + " " + String(obstaculo[3]));
 }
