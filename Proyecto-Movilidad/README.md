@@ -3,21 +3,19 @@
 Este proyecto consiste en probar la movilidad de un robot a través de Bluetooth. El código se encarga de establecer una conexión Bluetooth con una PC y recibir comandos de dirección. Estos comandos se utilizan para controlar los motores del robot y moverlo en diferentes direcciones.
 
 ### Requisitos
-
 * Placa ESP32 compatible
 * Módulo Bluetooth
 * Pantalla LCD I2C
 * Motores y controladores de motor
 
 ### Configuración
-
 Conecta el módulo Bluetooth y la pantalla LCD I2C a la ESP32, así como los motorreductores.
 
 ### Instalación
 Se utilizaron las bibliotecas BluetoothSerial y LiquidCrystal_I2C.
 
 ### Uso
-Carga el código en la placa ESP32, abre el monitor serial y conecta tu PC al módulo Bluetooth.
+Carga el código en la placa ESP32, abre el monitor serial y conecta tu PC al módulo Bluetooth (en nuestro caso, se llama "Robot_Danya_Luis").
 Envía comandos de dirección desde tu PC al robot a través de la conexión Bluetooth.
 Observa cómo el robot se mueve en la dirección especificada y muestra el estado en la pantalla LCD.
 
