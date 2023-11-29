@@ -1,7 +1,7 @@
-#Proyecto Final
+# Proyecto Final
 Este proyecto consiste en un robot (controlado por la ESP32 Dev Kit V1) que utiliza diferentes sensores para realizar tareas específicas. El código fuente se encuentra en el archivo Proyecto-Final.ino.
 
-###Descripción del proyecto
+### Descripción del proyecto
 El objetivo de este proyecto es construir un robot capaz de moverse de manera autónoma y realizar acciones en función de los datos recopilados por sus sensores. El robot utiliza los siguientes componentes:
 
 Sensor ultrasónico: se utiliza para medir la distancia entre el robot y los objetos cercanos.
