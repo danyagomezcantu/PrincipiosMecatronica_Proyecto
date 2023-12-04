@@ -2,7 +2,7 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // Objeto LiquidCrystal_I2C, "lcd", con la default screen address I2C 0x27, 16 columnas y 2 filas
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Objeto LiquidCrystal_I2C, "lcd", default screen address I2C 0x27, 16 columnas y 2 filas
 
 // Definición de pines y variables
 // Sensor ultrasónico
