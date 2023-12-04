@@ -15,6 +15,14 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // Objeto LiquidCrystal_I2C, "lcd", con la d
 #define infrarrojo3 5
 #define infrarrojo4 17
 
+// Encoders
+int channel0 = 0;     
+int channel1 = 0; 
+int freq = 1000;     
+int resolution = 12; 
+volatile long pulses = 0;  
+const int PPR = 480; 
+
 // Fotoresistores
 #define fotoresistorIzq 34
 #define fotoresistorDer 35 
@@ -38,10 +46,11 @@ int luzDetectadaDer;
 int duracionUltrasonico;
 int distanciaUltrasonico;
 
-bool infra1, infra2, infra3, infra4;
-
 volatile long pulsesDer = 0;
 volatile long pulsesIzq = 0;
+
+bool infra1, infra2, infra3, infra4;
+int obstaculo[] = {0, 0, 0, 0};
 
 // Configuración de pines
 void setup() {
@@ -71,6 +80,13 @@ void setup() {
   
   lcd.init();   // Inicializa el LCD 
   lcd.backlight();   // Enciende la retroiluminación del LCD
+
+  // Configuración de los encoders
+  ledcSetup(channel0,freq,resolution);
+  ledcAttachPin(ENA1,channel0);
+
+  ledcSetup(channel1,freq,resolution);
+  ledcAttachPin(ENA2,channel1);
 }
 
 void loop() {
