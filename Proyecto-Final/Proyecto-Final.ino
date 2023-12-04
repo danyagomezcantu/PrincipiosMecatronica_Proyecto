@@ -15,7 +15,15 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // Objeto LiquidCrystal_I2C, "lcd", con la d
 #define infrarrojo3 5
 #define infrarrojo4 17
 
-// Fotoresistores
+// Encoders
+int channel0 = 0;     
+int channel1 = 0; 
+int freq = 1000;     
+int resolution = 12; 
+volatile long pulses = 0;  
+const int PPR = 480; 
+
+// Fotorresistores
 #define fotoresistorIzq 34
 #define fotoresistorDer 35 
 
@@ -32,11 +40,15 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // Objeto LiquidCrystal_I2C, "lcd", con la d
 #define EncB2 16
 
 // Variables
+// Fotorresistores
 int luzDetectadaIzq;
 int luzDetectadaDer;
 
 int duracionUltrasonico;
 int distanciaUltrasonico;
+
+volatile long pulsesDer = 0;
+volatile long pulsesIzq = 0;
 
 bool infra1, infra2, infra3, infra4;
 int obstaculo[] = {0, 0, 0, 0};
@@ -45,7 +57,7 @@ int obstaculo[] = {0, 0, 0, 0};
 void setup() {
   Serial.begin(115200);
 
-  pinMode(fotoresistorIzq, INPUT); // Configuración de los fotoresistores como entrada
+  pinMode(fotoresistorIzq, INPUT); // Configuración de los fotorresistores como entrada
   pinMode(fotoresistorDer, INPUT); 
   
   pinMode(trigPin, OUTPUT); // Configuración del sensor ultrasónico
@@ -59,6 +71,7 @@ void setup() {
   pinMode(ENA1, OUTPUT); // Configuración de los motores
   pinMode(InA1, OUTPUT);  
   pinMode(InB1, OUTPUT); 
+  
   pinMode(ENA2, OUTPUT); 
   pinMode(InA2, OUTPUT); 
   pinMode(InB2, OUTPUT); 
@@ -67,6 +80,13 @@ void setup() {
   pinMode(EncA2, INPUT);  
   pinMode(EncB2, INPUT); 
   
+  // Configuración de los encoders
+  ledcSetup(channel0,freq,resolution);
+  ledcAttachPin(ENA1,channel0);
+
+  ledcSetup(channel1,freq,resolution);
+  ledcAttachPin(ENA2,channel1);
+
   lcd.init();   // Inicializa el LCD 
   lcd.backlight();   // Enciende la retroiluminación del LCD
 }
@@ -81,7 +101,6 @@ void loop() {
   Fotoresistor();
   Ultrasonico();
   Obstaculos();
-  Serial.println();
 
   // Movimiento del robot
   if (luzDetectadaIzq < 4000 & luzDetectadaDer < 4000) {
@@ -149,8 +168,8 @@ void adelante() {
   digitalWrite(InB1, HIGH);
   digitalWrite(InA2, LOW);
   digitalWrite(InB2, HIGH);
-  digitalWrite(ENA1, HIGH);
-  digitalWrite(ENA2, HIGH);
+  ledcWrite(channel0, 4095);
+  ledcWrite(channel1, 4095);
 }
 
 void atras() {
@@ -158,8 +177,8 @@ void atras() {
   digitalWrite(InB1, LOW);
   digitalWrite(InA2, HIGH);
   digitalWrite(InB2, LOW);
-  digitalWrite(ENA1, HIGH);
-  digitalWrite(ENA2, HIGH);
+  ledcWrite(channel0, 4095);
+  ledcWrite(channel1, 4095);
 }
 
 void derecha() {
@@ -167,8 +186,8 @@ void derecha() {
   digitalWrite(InB1, HIGH);
   digitalWrite(InA2, LOW);
   digitalWrite(InB2, LOW);
-  digitalWrite(ENA1, HIGH);
-  digitalWrite(ENA2, HIGH);
+  ledcWrite(channel0, 4095);
+  ledcWrite(channel1, 4095);
 }
 
 void izquierda() {
@@ -176,8 +195,8 @@ void izquierda() {
   digitalWrite(InB1, LOW);
   digitalWrite(InA2, LOW);
   digitalWrite(InB2, HIGH);
-  digitalWrite(ENA1, HIGH);
-  digitalWrite(ENA2, HIGH);
+  ledcWrite(channel0, 4095);
+  ledcWrite(channel1, 4095);
 }
 
 void detenido() {
@@ -185,8 +204,8 @@ void detenido() {
   digitalWrite(InB1, LOW);
   digitalWrite(InA2, LOW);
   digitalWrite(InB2, LOW);
-  digitalWrite(ENA1, LOW);
-  digitalWrite(ENA2, LOW);
+  ledcWrite(channel0, 0);
+  ledcWrite(channel1, 0);
 }
 
 // Funciones de sensado
@@ -230,17 +249,17 @@ void Obstaculos(){
   lcd.print(String(obstaculo[0])+" "+String(obstaculo[1])+" "+String(obstaculo[2])+" "+String(obstaculo[3]));
 }
 
-// Funciones de los pulsos de los encoders
-void Encoder_izquierdo() {
-  if(digitalRead(EncB1) == HIGH) {
-    pulsesIzq++;
+// Funciones de los encoders
+void Encoder_izquierdo(){
+  if(digitalRead(EncB1)==HIGH){
+      pulsesIzq++;
   } else {
     pulsesIzq--;
   }  
 }
 
 void Encoder_derecho() {
-  if(digitalRead(EncB2) == HIGH) {
+  if (digitalRead(EncB2) == HIGH) {
     pulsesDer++;
   } else {
     pulsesDer--;
